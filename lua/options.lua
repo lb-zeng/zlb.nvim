@@ -5,6 +5,12 @@ vim.loader.enable()
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Set indentation to use 2 spaces instead of tabs
+vim.opt.tabstop = 2 -- Number of spaces used to display a tab character
+vim.opt.softtabstop = 2 -- Number of spaces inserted or deleted when pressing Tab or Backspace
+vim.opt.shiftwidth = 2 -- Number of spaces used for each indentation level
+vim.opt.expandtab = true -- Convert tabs to spaces when inserting indentation
+
 -- Enable line numbers
 vim.opt.number = true
 
