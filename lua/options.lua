@@ -46,7 +46,3 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 -- Open horizontal splits below
 vim.opt.splitbelow = true
-
-
-
-

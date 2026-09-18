@@ -14,7 +14,7 @@ vim.pack.add({
 require("fidget").setup()
 require("mason").setup()
 
-vim.api.nvim_create_autocmd("LspAttach",{
+vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("zlb-lsp-attach", { clear = true }),
   callback = function(event)
     -- LSP-specific keymaps
@@ -37,19 +37,23 @@ vim.api.nvim_create_autocmd("LspAttach",{
         group = highlight_augroup,
         callback = vim.lsp.buf.clear_references,
       })
-
     end
     vim.api.nvim_create_autocmd("LspDetach", {
       group = vim.api.nvim_create_augroup("zlb-lsp-detach", { clear = true }),
-        callback = function(event2)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds({ group = "zlb-lsp-highlight", buffer = event2.buf })
-        end
+      callback = function(event2)
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_clear_autocmds({ group = "zlb-lsp-highlight", buffer = event2.buf })
+      end,
     })
 
     -- Toggle virtual type hints shown by the LSP
     if client and client:supports_method("textDocument/inlayHint", event.buf) then
-      vim.keymap.set("n", "<leader>uh", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })) end, { buffer = event.buf, desc = "Toggle Inlay Hints" })
+      vim.keymap.set(
+        "n",
+        "<leader>uh",
+        function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf })) end,
+        { buffer = event.buf, desc = "Toggle Inlay Hints" }
+      )
     end
   end,
 })
@@ -68,19 +72,14 @@ local servers = {
       client.server_capabilities.documentFormattingProvider = false
       if client.workspace_folders then
         local path = client.workspace_folders[1].name
-        if
-          path ~= vim.fn.stdpath('config')
-          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-        then
-          return
-        end
+        if path ~= vim.fn.stdpath("config") and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc")) then return end
       end
-      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
         runtime = {
-          version = 'LuaJIT',
+          version = "LuaJIT",
           path = {
-            'lua/?.lua',
-            'lua/?/init.lua',
+            "lua/?.lua",
+            "lua/?/init.lua",
           },
         },
         workspace = {
