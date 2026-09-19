@@ -25,6 +25,14 @@ vim.diagnostic.config({
   float = { border = "rounded", source = "if_many" },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
   virtual_text = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN] = "",
+      [vim.diagnostic.severity.INFO] = "",
+      [vim.diagnostic.severity.HINT] = "󰌵",
+    },
+  },
   jump = {
     on_jump = function(_, bufnr)
       vim.diagnostic.open_float({
